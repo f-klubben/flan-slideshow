@@ -1,0 +1,39 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+    height: 100%;
+    width: 360px;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    background: #eee;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+.sidebar h1 {
+    padding: 6px 8px 6px 0px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    font-weight: bold;
+}
+
+.sidebar table {
+    width: 100%;
+}
+
+.sidebar td {
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    vertical-align: top;
+}
+
+.active_event {
+    font-weight: bold;
+}
