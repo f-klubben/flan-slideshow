@@ -1,6 +1,23 @@
 window.onload = function() {
     update_sidebar();
     setInterval(update_sidebar, 3000);
+    setInterval(update_sponsor_logo, 3000);
+}
+
+const sponsor_iterator = infinite_sponsor_iterator();
+
+function* infinite_sponsor_iterator(){
+    while(true){
+        for(const sponsor in sponsors){
+            yield sponsors[sponsor];
+        }
+    }
+}
+
+function update_sponsor_logo(){
+    const sponsor_logo = document.getElementById("sponsor_logo");
+    const sponsor = sponsor_iterator.next().value;
+    sponsor_logo.style.backgroundImage = "url(" + sponsor.logo + ")";
 }
 
 function update_sidebar() {

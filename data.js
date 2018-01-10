@@ -2,6 +2,10 @@ const sponsors = {
     sponsor1: {
         logo: "default.png",
         name: "Default Sponsor"
+    },
+    sponsor2: {
+        logo: "default2.png",
+        name: "Default Sponsor"
     }
 };
 
@@ -40,7 +44,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/heroes3"
+        fiki: "http://fklub.dk/flan/heroes3"
     },
     {
         id: 4,
@@ -51,7 +55,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/worms",
+        fiki: "http://fklub.dk/flan/worms",
         signup: "[challonge link]"
     },
     {
@@ -63,7 +67,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/overwatch",
+        fiki: "http://fklub.dk/flan/overwatch",
         signup: "[challonge link]"
     },
     {
@@ -81,7 +85,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/warcraft3",
+        fiki: "http://fklub.dk/flan/warcraft3",
         signup: "[challonge link]"
     },
     {
@@ -93,7 +97,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/rocket_league",
+        fiki: "http://fklub.dk/flan/rocket_league",
         signup: "[challonge link]"
     },
     {
@@ -111,7 +115,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/lol",
+        fiki: "http://fklub.dk/flan/lol",
         signup: "[challonge link]"
     },
     {
@@ -123,7 +127,7 @@ const events = [
         responsible: [
             flan_crew["wiingreen"]
         ],
-        fiki: "http://fklubben.dk/flan/csgo",
+        fiki: "http://fklub.dk/flan/csgo",
         signup: "[challonge link]"
     }
 ];
