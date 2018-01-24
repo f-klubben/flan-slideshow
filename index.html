@@ -13,28 +13,54 @@
         </div>
         <div class="slide">
             <div id="sponsor_logo" style="background: center no-repeat url(http://fklub.dk/_media/flan.jpg); background-size: contain; width: 100%; height: 100%"> </div>
-            <div id="tournement_start" style="display:none">
-                <img src="sponsor_logos/default.png" id="game_logo"/>
-                <canvas id="timer" width="400" height="400"></canvas>
-                <table id="responsible_table">
-                    <tr>
-                        <td>
-                        <img src="crewportraits/default.png"/>
-                        </td>
-                        <td>
-                        <img src="crewportraits/default.png"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        Claus Wiingreen
-                        </td>
-                        <td>
-                        Dude Otherguy
-                        </td>
-                    </tr>
-                </table>
+            <div id="tournement_start">
+                <div style="width:66%;float:left;">
+                    <div style="height:50%">
+                        <img src="eventlogos/default.png" class="logo" id="game_logo" style="position:relative;top:50%;transform:translateY(-50%)"/>
+                    </div>
+                    <div style="height:50%">
+                        <p align="center" style="margin:0">Sponsoreret af <span>SPONSOR NAVN</span></p>
+                        <img src="sponsorlogos/default2.png" class="logo" style="max-height:80%" id="tournement_sponsor_logo"/>
+                    </div>
+                </div>
+                <div style="width:33%;float:right;">
+                    <div style="height:33%">
+                        <h1 id="tournement_name" style="margin:0;padding-top:1em">Overwatch 3v3</h1>
+                        <p id="tournement_message" style="margin:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo suscipit molestie.</p>
+                    </div>
+                    <div style="height:33%">
+                        <canvas id="timer" width="400" height="400"></canvas>
+                    </div>
+                    <div style="height:33%">
+                        <p style="margin:0;padding-top:1em">Turnerings ansvarlige</p>
+                        <table id="responsible_table" style="width:100%">
+                            <tr>
+                                <td>
+                                    <img src="crewportraits/default.png" class="logo"/>
+                                </td>
+                                <td>
+                                    <img src="crewportraits/default.png" class="logo"/>
+                                </td>
+                                <td>
+                                    <img src="crewportraits/default.png" class="logo"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                Claus Wiingreen
+                                </td>
+                                <td align="center">
+                                Daniel Sørensen
+                                </td>
+                                <td align="center">
+                                Rasmus Jensen
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <div>
         </div>
     </body
 </html>

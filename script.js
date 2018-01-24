@@ -2,6 +2,9 @@ const second = 1000;
 const minute = 60*second;
 const hour = 60*minute
 
+let is_counting_down = false;
+let is_taking_pictures = false;
+
 // Setup events
 events.sort(function(a, b){
     return a.start - b.start;
@@ -31,14 +34,57 @@ for(index in events){
     setTimeout(function(){runEvent(event);}, time_to_event);
 }
 
+let sponsor_cycle_handle;
+
 window.onload = function() {
     build_sidebar();
-    setTimeout(function(){
-        startEventCountDown({start:Date.now()+1*minute});
+    /*setTimeout(function(){
+        //startEventCountDown({start:Date.now()+1*minute});
     }, 6*second);
-    update_sponsor_logo();
-    setInterval(update_sponsor_logo, 3*second);
+    let t = new Timer(30*minute);
+    t.start();*/
+    startSponsorCycle();
 }
+
+document.addEventListener('keydown', handleKeyboardInput);
+
+function startSponsorCycle(){
+    update_sponsor_logo();
+    sponsor_cycle_handle = setInterval(update_sponsor_logo, 3*second);
+}
+
+function handleKeyboardInput(event){
+    let index = event.keyCode - 48;
+    
+    if(index >= events.length || index < 0){
+        return;
+    }
+    
+    let flan_event = events.find(function(element){
+        return element.id == index && element.sponsor != undefined;
+    });
+    
+    showSponsorCycle();
+    clearInterval(sponsor_cycle_handle);
+    set_sponsor_logo(flan_event.sponsor.logo);
+    is_taking_pictures = true;
+    
+    console.log(flan_event);
+    
+    document.addEventListener('keydown', handleGoBackEvent);
+    document.removeEventListener('keydown', handleKeyboardInput);
+};
+
+function handleGoBackEvent(event){
+    if(event.keyCode != 27) return;
+    startSponsorCycle();
+    is_taking_pictures = false;
+    
+    if(is_counting_down) showCountDownScreen();
+    
+    document.addEventListener('keydown', handleKeyboardInput);
+    document.removeEventListener('keydown', handleGoBackEvent);
+};
 
 function runEvent(event){
     console.log("Event " + event.id + " Started.");
@@ -50,17 +96,30 @@ function runEvent(event){
     }, event.end - Date.now());
 }
 
+function showSponsorCycle(){
+    let sponsors = document.getElementById("sponsor_logo");
+    let tournement = document.getElementById("tournement_start");
+    sponsors.style.display = "block";
+    tournement.style.display = "none";
+}
+
+function showCountDownScreen(){
+    if(is_taking_pictures) return;
+    let sponsors = document.getElementById("sponsor_logo");
+    let tournement = document.getElementById("tournement_start");
+    sponsors.style.display = "none";
+    tournement.style.display = "block";
+}
+
 function startEventCountDown(event){
     console.log("Starting Event Countdown");
-    let sponsors = document.getElementById("sponsor_logo");
-    sponsors.style.display = "none";
-    let tournement = document.getElementById("tournement_start");
-    tournement.style.display = "block";    
+    showCountDownScreen();   
     const t = new Timer(event.start - Date.now(), function(){
-        sponsors.style.display = "block";
-        tournement.style.display = "none";
+        showSponsorCycle();
+        is_counting_down = false;
     });
     t.start();
+    is_counting_down = true;
 }
 
 const sponsor_iterator = infinite_sponsor_iterator();
@@ -76,7 +135,11 @@ function* infinite_sponsor_iterator(){
 function update_sponsor_logo(){
     const sponsor_logo = document.getElementById("sponsor_logo");
     const sponsor = sponsor_iterator.next().value;
-    sponsor_logo.style.backgroundImage = "url(" + sponsor.logo + ")";
+    set_sponsor_logo(sponsor.logo);
+}
+
+function set_sponsor_logo(uri){
+    sponsor_logo.style.backgroundImage = "url(" + uri + ")";
 }
 
 function build_sidebar() {
