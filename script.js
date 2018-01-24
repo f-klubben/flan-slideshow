@@ -33,9 +33,11 @@ for(index in events){
 
 window.onload = function() {
     build_sidebar();
-    const t = new Timer(30*minute);
-    t.start();
-    setTimeout(function(){t.stop();}, 30*minute)
+    setTimeout(function(){
+        startEventCountDown({start:Date.now()+1*minute});
+    }, 6*second);
+    update_sponsor_logo();
+    setInterval(update_sponsor_logo, 3*second);
 }
 
 function runEvent(event){
@@ -49,8 +51,17 @@ function runEvent(event){
 }
 
 function startEventCountDown(event){
-    const t = new Timer(event.start - Date.now());
-    t.start();}
+    console.log("Starting Event Countdown");
+    let sponsors = document.getElementById("sponsor_logo");
+    sponsors.style.display = "none";
+    let tournement = document.getElementById("tournement_start");
+    tournement.style.display = "block";    
+    const t = new Timer(event.start - Date.now(), function(){
+        sponsors.style.display = "block";
+        tournement.style.display = "none";
+    });
+    t.start();
+}
 
 const sponsor_iterator = infinite_sponsor_iterator();
 
@@ -109,7 +120,7 @@ function add_to_plan(event){
     document.getElementById("plan").appendChild(table_row);
 }
 
-function Timer(duration){
+function Timer(duration, callback = undefined){
     console.log("Timer::constructor called with parameter duration: " + duration);
     const canvas = document.getElementById("timer");
     const ctx = canvas.getContext("2d");
@@ -160,14 +171,17 @@ function Timer(duration){
       drawCountDown(ctx, radius, time_left);
       
       if(time_left.getMinutes() + time_left.getSeconds() == 0){
-        this.stop();
+        console.log("Timer::completed called");
+        clearInterval(this.interval_id);
+        if(callback) callback();
       }
     }
     
     this.start = function(){
         console.log("Timer::start called");
         end_time = Date.now() + duration;
-        this.interval_id = setInterval(drawClock, 1000);
+        this.interval_id = setInterval(drawClock, 500);
+        drawClock();
     }
     
     this.stop = function(){
