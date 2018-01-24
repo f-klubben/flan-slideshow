@@ -1,39 +1,40 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script src="data_model.js"></script>
+        <script src="data.js"></script>
+        <script src="script.js"></script>
     </head>
     <body>
         <div class="sidebar">
-            <h1>FLAN 9.11 - Fredag</h1>
-            <table>
-                <tr class="active_event">
-                    <td>17:00</td>
-                    <td>Dørene Åbner</td>
-                </tr>
-                <tr>
-                    <td>18:45</td>
-                    <td>Aftensmad Serveres</td>
-                </tr>
-                <tr>
-                    <td>19:00</td>
-                    <td>Velkomst og Sponsoroplæg</td>
-                </tr>
-                <tr>
-                    <td>20:00</td>
-                    <td>Heroes 3 (Kører hele weekenden)</td>
-                </tr>
-                <tr>
-                    <td>20:00</td>
-                    <td>Worms Amageddon</td>
-                </tr>
-                <tr>
-                    <td>22:00</td>
-                    <td>Overwatch 3v3</td>
-                </tr>
-            </table>
+            <h1>FLAN 9.11</h1>
+            <table id="plan"></table>
         </div>
         <div class="slide">
-            <p>Hello, FLAN!</p>
+            <div id="sponsor_logo" style="background: center no-repeat url(http://fklub.dk/_media/flan.jpg); background-size: contain; width: 100%; height: 100%"> </div>
+            <div id="tournement_start" style="display:none">
+                <img src="sponsor_logos/default.png" id="game_logo"/>
+                <canvas id="timer" width="400" height="400"></canvas>
+                <table id="responsible_table">
+                    <tr>
+                        <td>
+                        <img src="crewportraits/default.png"/>
+                        </td>
+                        <td>
+                        <img src="crewportraits/default.png"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        Claus Wiingreen
+                        </td>
+                        <td>
+                        Dude Otherguy
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body
 </html>

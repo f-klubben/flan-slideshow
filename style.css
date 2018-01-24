@@ -37,11 +37,11 @@ body {
 
 .active_event {
     font-weight: bold;
+    color: #000;
 }
 
 .slide {
     margin-left: 360px; /* Same as the width of the sidenav */
     font-size: 28px;
     padding: 0px 10px;
-    text-align: center;
 }
