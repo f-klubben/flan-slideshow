@@ -111,8 +111,47 @@ function showCountDownScreen(){
     tournement.style.display = "block";
 }
 
+function show_responsible(responsible){
+    let responsible_table = document.getElementById("responsible_table");
+    responsible_table.innerHTML = "";
+    let responsible_image_row = document.createElement("tr");
+    let responsible_name_row = document.createElement("tr");
+    
+    for(let member of responsible){
+        let image = document.createElement("td");
+        let name = document.createElement("td");
+        name.align = "center";
+        
+        image.innerHTML = '<img src="' + member.image + '" class="logo"/>';
+        name.innerHTML = member.name;
+        
+        responsible_image_row.appendChild(image);
+        responsible_name_row.appendChild(name);
+    }
+    
+    responsible_table.appendChild(responsible_image_row);
+    responsible_table.appendChild(responsible_name_row);
+}
+
 function startEventCountDown(event){
     console.log("Starting Event Countdown");
+    
+    show_responsible(event.responsible);
+    let message = document.getElementById("tournement_message");
+    if(event.message == undefined)
+        message.innerHTML = "";
+    else 
+        message.innerHTML = event.message;
+    
+    let name = document.getElementById("tournement_name");
+    name.innerHTML = event.title;
+    let sponsor_name = document.getElementById("tournement_sponsor_name");
+    sponsor_name.innerHTML = event.sponsor.name;
+    let sponsor_logo = document.getElementById("tournement_sponsor_logo");
+    sponsor_logo.src = event.sponsor.logo; 
+    let event_logo = document.getElementById("game_logo");
+    event_logo.src = event.image;
+    
     showCountDownScreen();   
     const t = new Timer(event.start - Date.now(), function(){
         showSponsorCycle();
