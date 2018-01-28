@@ -42,10 +42,12 @@ const events = [
         [flan_crew["wiingreen"]]),*/
     new Event(
         "Warcraft 3 - Custom Maps",
-        new Date(day3 + "01:06"),
+        new Date(day3 + "01:18"),
         new Date(day3 + "02:00"),
         sponsors["sponsor1"],
-        [flan_crew["wiingreen"]]),
+        [flan_crew["wiingreen"]],
+        "eventlogos/default.png",
+        "Challonge link: [LINK]<br/>Fiki: [LINK]"),
     /*new Event(
         "Rocket League",
         new Date(day2 + "12:00"),

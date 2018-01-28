@@ -25,7 +25,7 @@ for(index in events){
         runEvent(event);
     }
     if(event.sponsor){        
-        setTimeout(function(){startEventCountDown(event);}, time_to_event - 1*minute);
+        setTimeout(function(){startEventCountDown(event);}, time_to_event - 5*minute);
     }
     
     console.log("Scheduled event for " + event.start + "\n" 
@@ -178,7 +178,7 @@ function update_sponsor_logo(){
 }
 
 function set_sponsor_logo(uri){
-    sponsor_logo.style.backgroundImage = "url(" + uri + ")";
+    sponsor_logo.src = uri;
 }
 
 function build_sidebar() {
