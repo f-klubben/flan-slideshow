@@ -6,12 +6,13 @@ function is_between(value, low, high) {
 }
 
 class Event{
-    constructor(title, start, end, sponsor = undefined, responsible = undefined, message = undefined){
+    constructor(title, start, end, sponsor = undefined, responsible = undefined, image = "eventlogos/default.png", message = undefined){
         this.id = next_event_id++;
         this.start = start;
         this.end = end;
         this.title = title;
         this.sponsor = sponsor;
+        this.image = image;
         this.responsible = responsible;
         this.message = message;
     }

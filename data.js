@@ -22,7 +22,7 @@ const day3 = "2018-01-25T"
 
 const events = [
 // Tournements
-    new Event(
+    /*new Event(
         "Heroes 3", 
         new Date(day1 + "22:29"), 
         new Date(day3 + "10:00"), 
@@ -39,14 +39,16 @@ const events = [
         new Date(day1 + "22:00"),
         new Date(day2 + "00:00"),
         sponsors["sponsor1"],
-        [flan_crew["wiingreen"]]),
+        [flan_crew["wiingreen"]]),*/
     new Event(
         "Warcraft 3 - Custom Maps",
-        new Date(day2 + "14:50"),
-        new Date(day2 + "15:00"),
+        new Date(day3 + "01:18"),
+        new Date(day3 + "02:00"),
         sponsors["sponsor1"],
-        [flan_crew["wiingreen"]]),
-    new Event(
+        [flan_crew["wiingreen"]],
+        "eventlogos/default.png",
+        "Challonge link: [LINK]<br/>Fiki: [LINK]"),
+    /*new Event(
         "Rocket League",
         new Date(day2 + "12:00"),
         new Date(day2 + "13:00"),
@@ -93,5 +95,5 @@ const events = [
     new Event(
         "Dørene Lukkes",
         new Date(day3 + "10:00"),
-        new Date(day3 + "11:00"))
+        new Date(day3 + "11:00"))*/
 ];
