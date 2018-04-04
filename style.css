@@ -1,5 +1,6 @@
 body {
     font-family: "Lato", sans-serif;
+    margin: 0;
 }
 
 .sidebar {
@@ -18,8 +19,8 @@ body {
 .sidebar h1 {
     padding: 6px 8px 6px 8px;
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    font-size: 32px;
+    color: #555;
     display: block;
     font-weight: bold;
 }
@@ -31,8 +32,8 @@ body {
 
 .sidebar td {
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    font-size: 28px;
+    color: #555;
     vertical-align: top;
 }
 
@@ -46,7 +47,7 @@ body {
     font-size: 28px;
 }
 
-.logo{
+.sponsorlogo, .logo{
     margin-left:auto; 
     margin-right:auto;
     display:block;
@@ -54,6 +55,30 @@ body {
     width:auto;
     max-height:100%;
     max-width:100%;
+}
+
+.sponsorlogo{
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translateX(-75%) translateY(-50%);
+}
+
+#sponsor_logo{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(http://fklub.dk/_media/flan.jpg); 
+    background-size: 90%; 
+    width: 100%; 
+    height: 100%;
+}
+
+.portrait {
+    width:  150px;
+    height: 225px;
+    display: block;
+    margin-left:auto; 
+    margin-right:auto;
 }
 
 #timer{
@@ -64,4 +89,12 @@ body {
     margin-left:auto; 
     margin-right:auto;
     display:block;
+}
+
+.rotate90 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
 }

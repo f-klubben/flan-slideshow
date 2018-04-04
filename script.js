@@ -1,7 +1,3 @@
-const second = 1000;
-const minute = 60*second;
-const hour = 60*minute
-
 let is_counting_down = false;
 let is_taking_pictures = false;
 
@@ -11,8 +7,7 @@ events.sort(function(a, b){
 });
 
 let now = Date.now();
-for(index in events){
-    let event = events[index];
+for(let event of events){
     let time_to_event = event.start - now;
     
     if(time_to_event < 0){
@@ -21,11 +16,8 @@ for(index in events){
                   + "Event title: '" + event.title + "'");
         continue;
     }
-    else if(event.is_now()){
-        runEvent(event);
-    }
-    if(event.sponsor){        
-        setTimeout(function(){startEventCountDown(event);}, time_to_event - 5*minute);
+    if(event.countdown){        
+        setTimeout(function(){startEventCountDown(event);}, time_to_event - count_down_time);
     }
     
     console.log("Scheduled event for " + event.start + "\n" 
@@ -34,27 +26,35 @@ for(index in events){
     setTimeout(function(){runEvent(event);}, time_to_event);
 }
 
-let sponsor_cycle_handle;
-
 window.onload = function() {
     build_sidebar();
-    /*setTimeout(function(){
-        //startEventCountDown({start:Date.now()+1*minute});
-    }, 6*second);
-    let t = new Timer(30*minute);
-    t.start();*/
     startSponsorCycle();
+    
+    for(let event of events){
+        if(event.is_now()){
+            runEvent(event);
+            continue;
+        }
+        
+        if(!event.countdown) continue;
+        
+        let time_to_event = event.start - now;
+        if(time_to_event < 0 && time_to_event > count_down_time){
+            startEventCountDown(event);
+        }
+        
+    }
+}
+
+let sponsor_cycle_handle;
+function startSponsorCycle(){
+    update_sponsor_logo();
+    sponsor_cycle_handle = setInterval(update_sponsor_logo, sponsor_cycle_time);
 }
 
 document.addEventListener('keydown', handleKeyboardInput);
-
-function startSponsorCycle(){
-    update_sponsor_logo();
-    sponsor_cycle_handle = setInterval(update_sponsor_logo, 3*second);
-}
-
-function handleKeyboardInput(event){
-    let index = event.keyCode - 48;
+function handleKeyboardInput(event){    
+    let index = event.keyCode - 48; // char '0' == int 48
     
     if(index >= events.length || index < 0){
         return;
@@ -63,11 +63,13 @@ function handleKeyboardInput(event){
     let flan_event = events.find(function(element){
         return element.id == index && element.sponsor != undefined;
     });
+    if(!flan_event) return;
     
     showSponsorCycle();
     clearInterval(sponsor_cycle_handle);
-    set_sponsor_logo(flan_event.sponsor.logo);
+    set_sponsor_logo(flan_event.sponsor.logo, "#000");
     is_taking_pictures = true;
+    
     
     console.log(flan_event);
     
@@ -76,7 +78,7 @@ function handleKeyboardInput(event){
 };
 
 function handleGoBackEvent(event){
-    if(event.keyCode != 27) return;
+    if(event.keyCode != 27) return; // 27 == ESC
     startSponsorCycle();
     is_taking_pictures = false;
     
@@ -89,6 +91,10 @@ function handleGoBackEvent(event){
 function runEvent(event){
     console.log("Event " + event.id + " Started.");
     const element = document.getElementById("event" + event.id);
+    if(!element) {
+        console.log("Failed to find event " + event.id);
+        return;
+    }
     element.classList.add("active_event");
     setTimeout(function(){
         element.classList.remove("active_event");
@@ -119,10 +125,10 @@ function show_responsible(responsible){
     
     for(let member of responsible){
         let image = document.createElement("td");
+        image.style.overflow = "hidden";
         let name = document.createElement("td");
         name.align = "center";
-        
-        image.innerHTML = '<img src="' + member.image + '" class="logo"/>';
+        image.innerHTML = '<img src="' + member.image + '" class="portrait"/>';
         name.innerHTML = member.name;
         
         responsible_image_row.appendChild(image);
@@ -153,10 +159,12 @@ function startEventCountDown(event){
     event_logo.src = event.image;
     
     showCountDownScreen();   
-    const t = new Timer(event.start - Date.now(), function(){
-        showSponsorCycle();
-        is_counting_down = false;
-    });
+    const t = new Timer(event.start - Date.now(), 
+        function(){ // Timer finished callback
+            showSponsorCycle();
+            is_counting_down = false;
+        }
+    );
     t.start();
     is_counting_down = true;
 }
@@ -177,8 +185,10 @@ function update_sponsor_logo(){
     set_sponsor_logo(sponsor.logo);
 }
 
-function set_sponsor_logo(uri){
-    sponsor_logo.src = uri;
+function set_sponsor_logo(uri, background_color = "#FFF"){
+    sponsor_logo.style.backgroundImage = "url(" + uri + ")";
+    sponsor_logo.style.backgroundColor = background_color;
+    //sponsor_logo.src = uri;
 }
 
 function build_sidebar() {
@@ -250,7 +260,7 @@ function Timer(duration, callback = undefined){
         //console.log("Timer::drawTime called");
         ctx.beginPath();
         ctx.moveTo(0,0);
-        ctx.arc(0, 0, radius*0.95, -0.5*Math.PI, -0.5*Math.PI+2*Math.PI*(time_left/duration));
+        ctx.arc(0, 0, radius*0.95, -0.5*Math.PI, -0.5*Math.PI+2*Math.PI*(time_left/count_down_time));
         ctx.lineTo(0,0);
         ctx.fillStyle = '#3c3';
         ctx.fill();

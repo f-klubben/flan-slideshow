@@ -2,31 +2,35 @@
     <head>
         <meta charset="utf-8"/>
         <link rel="stylesheet" type="text/css" href="style.css"/>
+        <script src="settings.js"></script>
         <script src="data_model.js"></script>
         <script src="data.js"></script>
         <script src="script.js"></script>
     </head>
     <body>
         <div class="sidebar">
-            <h1>FLAN 9.11</h1>
+            <h1 id="title"></h1>
+            <script>
+                document.getElementById("title").innerHTML = title;
+            </script>
             <table id="plan"></table>
         </div>
         <div class="slide">
-            <img id="sponsor_logo" class="logo"></img>
+            <img id="sponsor_logo"></img>
             <div id="tournement_start" style="display:none">
                 <div style="width:66%;float:left;">
-                    <div style="height:50%">
+                    <div style="height:60%">
                         <img src="eventlogos/default.png" class="logo" id="game_logo" style="position:relative;top:50%;transform:translateY(-50%)"/>
                     </div>
-                    <div style="height:50%">
-                        <p align="center" style="margin:0">Sponsoreret af <span id="tournement_sponsor_name">SPONSOR NAVN</span></p>
-                        <img src="sponsorlogos/default2.png" class="logo" style="max-height:80%" id="tournement_sponsor_logo"/>
+                    <div style="height:40%">
+                        <p align="center" style="margin:0">Sponsoreret af <span id="tournement_sponsor_name"></span></p>
+                        <img src="sponsorlogos/default2.png" class="logo" style="max-width:80%; width:80%" id="tournement_sponsor_logo"/>
                     </div>
                 </div>
                 <div style="width:33%;float:right;">
                     <div style="height:33%">
-                        <h1 id="tournement_name" style="margin:0;padding-top:1em">Overwatch 3v3</h1>
-                        <p id="tournement_message" style="margin:0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo suscipit molestie.</p>
+                        <h1 id="tournement_name" style="margin:0;padding-top:1em"></h1>
+                        <p id="tournement_message" style="margin:0"></p>
                     </div>
                     <div style="height:33%">
                         <canvas id="timer" width="400" height="400"></canvas>
