@@ -23,7 +23,8 @@ const events = [
             flan_crew["crew1"]
         ],
         "eventlogos/default.png",
-        "Regler og tilmelding på <a href='#'>link</a><br/>Evt. andre kommentarer."),
+        "Regler og tilmelding på <a href='#'>link</a><br/>Evt. andre kommentarer.", 
+        true),
        
 // Standard events
     new Event(
