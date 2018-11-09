@@ -33,7 +33,11 @@
                         <p id="tournement_message" style="margin:0"></p>
                     </div>
                     <div style="height:33%">
-                        <canvas id="timer" width="400" height="400"></canvas>
+                        <svg width="300" height="300">
+                            <path id="timer_fill" fill="none" stroke="#3c3" stroke-width="135"/>
+                            <circle cx="150" cy="150" r="135" stroke="black" stroke-width="10" fill="none"/>
+                            <text id="timer_text" x="150" y="150" text-anchor="middle" alignment-baseline="central" font-size="67">30:00</text>
+                        </svg>
                     </div>
                     <div style="height:33%">
                         <p style="margin:0;padding-top:1em">Turnerings ansvarlige</p>

@@ -6,43 +6,30 @@ events.sort(function(a, b){
     return a.start - b.start;
 });
 
-let now = Date.now();
-for(let event of events){
-    let time_to_event = event.start - now;
-    
-    if(time_to_event < 0){
-        console.log("Event " + event.id + " start time has already passed.\n"
-                  + "Start time: " + event.start + "\n"
-                  + "Event title: '" + event.title + "'");
-        continue;
-    }
-    if(event.countdown){        
-        setTimeout(function(){startEventCountDown(event);}, time_to_event - count_down_time);
-    }
-    
-    console.log("Scheduled event for " + event.start + "\n" 
-              + "Milliseconds to event " + time_to_event + "\n"
-              + "Event title: '" + event.title + "'");
-    setTimeout(function(){runEvent(event);}, time_to_event);
-}
-
 window.onload = function() {
     build_sidebar();
     startSponsorCycle();
     
+    const now = Date.now();
+    
     for(let event of events){
+        let time_to_event = event.start - now;
+        
+        if(time_to_event > 0){
+            setTimeout(function(){runEvent(event);}, time_to_event);
+        }
+        
         if(event.is_now()){
             runEvent(event);
-            continue;
         }
-        
-        if(!event.countdown) continue;
-        
-        let time_to_event = event.start - now;
-        if(time_to_event < 0 && time_to_event > count_down_time){
-            startEventCountDown(event);
+        else if(event.countdown){
+            if(time_to_event > 0 && time_to_event < count_down_time){
+                startEventCountDown(event);
+            }
+            else if(event.countdown){        
+                setTimeout(function(){startEventCountDown(event);}, time_to_event - count_down_time);
+            }
         }
-        
     }
 }
 
@@ -158,7 +145,7 @@ function startEventCountDown(event){
     let event_logo = document.getElementById("game_logo");
     event_logo.src = event.image;
     
-    showCountDownScreen();   
+    showCountDownScreen();
     const t = new Timer(event.start - Date.now(), 
         function(){ // Timer finished callback
             showSponsorCycle();
@@ -232,61 +219,46 @@ function add_to_plan(event){
     document.getElementById("plan").appendChild(table_row);
 }
 
+function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+    var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+    return {
+        x: centerX + (radius * Math.cos(angleInRadians)),
+        y: centerY + (radius * Math.sin(angleInRadians))
+    };
+}
+
+function describeArc(x, y, radius, startAngle, endAngle){
+    var start = polarToCartesian(x, y, radius, endAngle);
+    var end = polarToCartesian(x, y, radius, startAngle);
+
+    var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+    var d = [
+        "M", start.x, start.y, 
+        "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y
+    ].join(" ");
+
+    return d;       
+}
+
 function Timer(duration, callback = undefined){
     console.log("Timer::constructor called with parameter duration: " + duration);
-    const canvas = document.getElementById("timer");
-    const ctx = canvas.getContext("2d");
-    let radius = canvas.height / 2;
-    ctx.translate(radius, radius);
-    radius *= 0.90;
+    const fill = document.getElementById("timer_fill");
+    const text = document.getElementById("timer_text");
     let end_time = undefined;
     
-    const drawFace = function(ctx, radius) {
-      //console.log("Timer::drawFace called");
-      ctx.beginPath();
-      ctx.arc(0, 0, radius, 0, 2*Math.PI);
-      ctx.fillStyle = 'white';
-      ctx.fill();
-      let grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
-      grad.addColorStop(0, '#333');
-      grad.addColorStop(0.5, 'white');
-      grad.addColorStop(1, '#333');
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = radius*0.1;
-      ctx.stroke();
-    }
-
-    const drawTime = function(ctx, radius, time_left, duration){   
-        //console.log("Timer::drawTime called");
-        ctx.beginPath();
-        ctx.moveTo(0,0);
-        ctx.arc(0, 0, radius*0.95, -0.5*Math.PI, -0.5*Math.PI+2*Math.PI*(time_left/count_down_time));
-        ctx.lineTo(0,0);
-        ctx.fillStyle = '#3c3';
-        ctx.fill();
-    }
-
-    const drawCountDown = function(ctx, radius, time_left){
-        //onsole.log("Timer::drawCountDown called");
-        ctx.textBaseline="middle";
-        ctx.textAlign="center";
-        ctx.font = radius*0.5 + "px arial";
-        ctx.fillStyle= '#333';
-        ctx.fillText(time_left.toLocaleTimeString([],{minute: "2-digit", second: "2-digit"}), 0, 0);
-    }
-    
     const drawClock = function() {
-      //console.log("Timer::drawClock called");
-      drawFace(ctx, radius);
-      const time_left = new Date(end_time - Date.now());
-      drawTime(ctx, radius, time_left, duration);
-      drawCountDown(ctx, radius, time_left);
-      
-      if(time_left.getMinutes() + time_left.getSeconds() == 0){
-        console.log("Timer::completed called");
-        clearInterval(this.interval_id);
-        if(callback) callback();
-      }
+        //console.log("Timer::drawClock called");
+
+        const time_left = new Date(end_time - Date.now());
+        fill.setAttribute("d", describeArc(150, 150, 67, 0, time_left/count_down_time*360));
+        text.innerHTML = time_left.toLocaleTimeString([],{minute: "2-digit", second: "2-digit"});
+        
+        if(time_left.getMinutes() + time_left.getSeconds() == 0){
+          console.log("Timer::completed called");
+          clearInterval(this.interval_id);
+          if(callback) callback();
+        }
     }
     
     this.start = function(){
